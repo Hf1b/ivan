@@ -1,0 +1,27 @@
+{
+  "name": "ueban",
+  "version": "1.0.0",
+  "description": "discord bot",
+  "main": "build/Main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheAltAccount/ueban-ts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheAltAccount/ueban-ts/issues"
+  },
+  "homepage": "https://github.com/TheAltAccount/ueban-ts#readme",
+  "dependencies": {
+    "@typeit/discord": "^4.0.9",
+    "discord.js": "^12.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.34",
+    "tslib": "^2.1.0"
+  }
+}
