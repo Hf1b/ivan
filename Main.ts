@@ -8,6 +8,11 @@ export class Main {
   }
 
   static start() {
+    if(!process.env.BOT_TOKEN) {
+      console.error("Укажите токен в BOT_TOKEN перед запуском.");
+      process.exit(1);
+    }
+
     this._client = new Client();
 
     this._client.login(
@@ -15,7 +20,7 @@ export class Main {
       `${__dirname}/AppDiscord.ts`,
     );
 
-    console.log(Client.getCommands());
+    console.log("Всего команд: " + Client.getCommands().length);
   }
 }
 
