@@ -12,8 +12,7 @@ export class Main {
 
     this._client.login(
       process.env.BOT_TOKEN,
-      `${__dirname}/discords/*.ts`,
-      `${__dirname}/discords/*.js`
+      `${__dirname}/AppDiscord.ts`,
     );
 
     console.log(Client.getCommands());
