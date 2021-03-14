@@ -3,7 +3,8 @@ import {
   Discord,
   CommandNotFound,
   CommandMessage,
-  Command
+  Command,
+  Description
 } from "@typeit/discord";
 
 console.log(__dirname);
@@ -16,12 +17,13 @@ console.log(__dirname);
 })
 export abstract class AppDiscord {
   @CommandNotFound()
-  notFound(command: CommandMessage) {
+  NotFound(command: CommandMessage) {
     command.reply("Команда не найдена");
   }
 
   @Command("test")
-  test(command: CommandMessage<null>) {
+  @Description("Тестовая команда")
+  TestCommand(command: CommandMessage) {
     command.reply("proggers");
   }
 }

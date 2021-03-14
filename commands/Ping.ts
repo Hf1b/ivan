@@ -1,11 +1,13 @@
 import {
   Command,
-  CommandMessage
+  CommandMessage,
+  Description
 } from "@typeit/discord";
 
 export abstract class Ping {
   @Command("ping")
-  async bye(command: CommandMessage) {
+  @Description("Показывает пинг бота")
+  async PingCommand(command: CommandMessage) {
     let ping = command.client.ws.ping;
     command.reply(`Пинг: ${ping}мс`);
   }
