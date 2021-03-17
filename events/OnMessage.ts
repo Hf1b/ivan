@@ -40,4 +40,11 @@ export abstract class OnReady {
       try { await m.delete(); } catch {}
     }
   }
+
+  @On("messageUpdate")
+  async updateMessage([_, n]: ArgsOf<"messageUpdate">, client: Client) {
+    if(n.content.match(INVITE)) {
+      try { await n.delete(); } catch {}
+    }
+  }
 }
