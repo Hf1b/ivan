@@ -4,6 +4,7 @@ import {
   On
 } from "@typeit/discord";
 
+const INVITE = /(discord\.(gg|io|me|li)|discord(app)?\.com\/invite)\/[\w\d]+/g;
 const MAX_COUNT = 1;
 
 let cooldown = {};
@@ -30,11 +31,13 @@ export abstract class OnReady {
     let count = cooldown[m.channel.id][m.author.id] || 0;
 
     if(count > MAX_COUNT) {
-      try {
-        await m.delete();
-      } catch {}
+      try { await m.delete(); } catch {}
     }
 
     cooldown[m.channel.id][m.author.id] = ++count;
+
+    if(m.content.match(INVITE)) {
+      try { await m.delete(); } catch {}
+    }
   }
 }
