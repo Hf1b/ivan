@@ -32,12 +32,14 @@ export abstract class OnReady {
 
     if(count > MAX_COUNT) {
       try { await m.delete(); } catch {}
+      return
     }
 
     cooldown[m.channel.id][m.author.id] = ++count;
 
     if(m.content.match(INVITE)) {
       try { await m.delete(); } catch {}
+      return
     }
   }
 

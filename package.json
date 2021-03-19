@@ -18,7 +18,8 @@
   "homepage": "https://github.com/TheAltAccount/ueban-ts#readme",
   "dependencies": {
     "@typeit/discord": "^4.0.9",
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "mongoose": "^5.12.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.34",

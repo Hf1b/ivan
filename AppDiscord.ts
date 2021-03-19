@@ -7,12 +7,12 @@ import {
   Description
 } from "@typeit/discord";
 
-console.log(__dirname);
-
 @Discord("!", {
   import: [
     Path.join(__dirname,  "commands", "*.ts"),
-    Path.join(__dirname,  "events", "*.ts")
+    Path.join(__dirname,  "commands", "*.js"),
+    Path.join(__dirname,  "events", "*.ts"),
+    Path.join(__dirname,  "events", "*.js")
   ]
 })
 export abstract class AppDiscord {
