@@ -44,7 +44,7 @@ class _Database {
 let Database: _Database;
 
 const setup_db = url => {
-  new _Database(url);
+  Database = new _Database(url);
 }
 
 export { Database, setup_db };
