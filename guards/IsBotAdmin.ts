@@ -1,7 +1,7 @@
 import { GuardFunction } from "@typeit/discord";
 import { Database } from "../database/Main";
 
-let IsAdmin: GuardFunction<"commandMessage"> = async ([command], _, next) => {
+let IsBotAdmin: GuardFunction<"commandMessage"> = async ([command], _, next) => {
   if(!Database.ready) {
     command.reply("Команда недоступна в связи с проблемами с БД.");
   }
@@ -16,4 +16,4 @@ let IsAdmin: GuardFunction<"commandMessage"> = async ([command], _, next) => {
   }
 }
 
-export { IsAdmin };
+export { IsBotAdmin };

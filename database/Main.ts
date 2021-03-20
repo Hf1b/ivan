@@ -1,11 +1,7 @@
 import * as mongoose from "mongoose";
 import SettingModel from "./models/Setting.model";
 
-let curr: number = 0;
-
 class _Settings {
-  data = {};
-
   async get(key: string) {
     let result = await SettingModel.find({ key });
     if(result[0]) return result[0].value;
@@ -14,7 +10,6 @@ class _Settings {
   async set(key: string, value: any) {
     await SettingModel.updateOne({ key }, { value }, { upsert: true });
   }
-  
 }
 
 class _Database {

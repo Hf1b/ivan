@@ -1,5 +1,7 @@
 import { Client } from "@typeit/discord";
+
 import { setup_db } from "./database/Main";
+import { setup_pixabay } from "./Pixabay";
 
 export class Main {
   private static _client: Client;
@@ -20,6 +22,12 @@ export class Main {
       setup_db(process.env.BOT_DBURL);
     }
 
+    if(!process.env.BOT_PIXAKEY) {
+      console.warn("Желательно - Для работы с Pixabay необходимо указать его ключ в BOT_PIXAKEY");
+    } else {
+      setup_pixabay(process.env.BOT_PIXAKEY);
+    }
+
     this._client = new Client();
 
     this._client.login(
@@ -31,5 +39,9 @@ export class Main {
     console.log("Всего команд: " + Client.getCommands().length);
   }
 }
+
+process.on("uncaughtException", (e) => {
+  console.error(e);
+})
 
 Main.start();

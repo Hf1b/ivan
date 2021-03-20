@@ -4,6 +4,9 @@ import {
   On
 } from "@typeit/discord";
 
+import { get_images, ready_pixabay } from "../Pixabay";
+import { random_item } from "../Utils";
+
 const INVITE = /(discord\.(gg|io|me|li)|discord(app)?\.com\/invite)\/[\w\d]+/g;
 const MAX_COUNT = 1;
 
@@ -40,6 +43,20 @@ export abstract class OnReady {
     if(m.content.match(INVITE)) {
       try { await m.delete(); } catch {}
       return
+    }
+
+    if(m.content.toLocaleLowerCase().indexOf("nazi") != -1) {
+      if(ready_pixabay()) {
+        let adolf = await get_images("fascism");
+        if(adolf.hits) {
+          let current = random_item(adolf.hits);
+          let msg = await m.channel.send(current.largeImageURL);
+
+          setTimeout(() => {
+            msg.delete();
+          }, 5000);
+        }
+      }
     }
   }
 
