@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 import SettingModel from "./models/Setting.model";
 
-class _Settings {
+class Settings {
   async get(key: string) {
     let result = await SettingModel.find({ key });
     if(result[0]) return result[0].value;
@@ -12,17 +12,34 @@ class _Settings {
   }
 }
 
-class _Database {
-  ready = false;
+/* Thanks to zziger for good advices
+ * 
+ * Oh shit, I'm sorry.
+ * Sorry for what? Our daddy taught us not to be ashamed of our classes.
+ *   Especially since they're using great patterns and all.
+ * Yeah, i see that. Your daddy gave you good advice.
+ */
+
+class Database {
+  private static _instance: Database;
+  private _ready = false;
 
   db = mongoose.connection;
-  Settings: _Settings;
+  Settings: Settings;
 
-  constructor(url: string) {
+  constructor(url?: string) {
+    if(Database._instance) return Database._instance;
+    Database._instance = this;
+
+    if(!url) {
+      return Database._instance;
+    }
+
     mongoose.connect(url, {
       useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
     });
-    this.Settings = new _Settings();
+
+    this.Settings = new Settings();
 
     this.db.on("error", e => {
       console.log("Ошибка при подключении к БД.");
@@ -31,15 +48,17 @@ class _Database {
 
     this.db.once("open", async () => {
       console.log("Успешное подключение к БД.")
-      this.ready = true;
+      this._ready = true;
     });
+  }
+
+  get ready() {
+    return this._ready;
+  }
+
+  static get instance() {
+    return this._instance;
   }
 }
 
-let Database: _Database;
-
-const setup_db = url => {
-  Database = new _Database(url);
-}
-
-export { Database, setup_db };
+export { Database };

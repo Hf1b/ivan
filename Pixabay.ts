@@ -1,27 +1,39 @@
 import axios from "axios";
 
-const ENDPOINT = "https://pixabay.com/api/";
+class Pixabay {
+  private static _instance;
+  private _ready = false;
 
-let PIXA_KEY: string;
+  private Endpoint = "https://pixabay.com/api/";
+  private Key: string;
 
-let get_images = async (query: string) => {
-  if(!PIXA_KEY) return;
+  constructor(key?: string) {
+    if(Pixabay._instance) return Pixabay._instance;
+    Pixabay._instance = this;
 
-  let response = await axios.get(ENDPOINT, { params: {
-    key: PIXA_KEY,
-    q: query,
-    per_page: 100
-  } });
+    if(!key) {
+      return Pixabay._instance
+    }
+    this.Key = key;
+  }
 
-  return response.data;
+  async getImages(query?: string) {
+    let response = await axios.get(this.Endpoint, { params: {
+      key: this.Key,
+      q: query,
+      per_page: 100
+    } });
+
+    return response.data;
+  }
+
+  get ready() {
+    return this._ready;
+  }
+
+  static get instance(): Pixabay {
+    return this._instance;
+  }
 }
 
-let setup_pixabay = (key: string) => {
-  PIXA_KEY = key;
-}
-
-let ready_pixabay = () => {
-  return !!PIXA_KEY;
-}
-
-export { get_images, setup_pixabay, ready_pixabay };
+export { Pixabay };

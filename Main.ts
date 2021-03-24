@@ -1,7 +1,7 @@
 import { Client } from "@typeit/discord";
 
-import { setup_db } from "./database/Main";
-import { setup_pixabay } from "./Pixabay";
+import { Database } from "./database/Main";
+import { Pixabay } from "./Pixabay";
 
 export class Main {
   private static _client: Client;
@@ -18,14 +18,16 @@ export class Main {
 
     if(!process.env.BOT_DBURL) {
       console.warn("Желательно - Для работы с БД необходимо указать URL на MongoDB в BOT_DBURL");
+      new Database;
     } else {
-      setup_db(process.env.BOT_DBURL);
+      new Database(process.env.BOT_DBURL);
     }
 
     if(!process.env.BOT_PIXAKEY) {
       console.warn("Желательно - Для работы с Pixabay необходимо указать его ключ в BOT_PIXAKEY");
+      new Pixabay;
     } else {
-      setup_pixabay(process.env.BOT_PIXAKEY);
+      new Pixabay(process.env.BOT_PIXAKEY);
     }
 
     this._client = new Client();

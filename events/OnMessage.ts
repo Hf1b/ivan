@@ -4,7 +4,7 @@ import {
   On
 } from "@typeit/discord";
 
-import { get_images, ready_pixabay } from "../Pixabay";
+import { Pixabay } from "../Pixabay";
 import { random_item } from "../Utils";
 
 const INVITE = /(discord\.(gg|io|me|li)|discord(app)?\.com\/invite)\/[\w\d]+/g;
@@ -46,8 +46,12 @@ export abstract class OnReady {
     }
 
     if(m.content.toLocaleLowerCase().indexOf("nazi") != -1) {
-      if(ready_pixabay()) {
-        let adolf = await get_images("fascism");
+      if(Pixabay.instance.ready) {
+        let adolf = await Pixabay.instance.getImages("fascism");
+
+        /* Думаю можно было как-то сделать менее по-петушиному,
+         * но вроде и так сойдёт.
+         */
         if(adolf.hits) {
           let current = random_item(adolf.hits);
           let msg = await m.channel.send(current.largeImageURL);
