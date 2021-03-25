@@ -3,9 +3,13 @@ import {
   Command,
   CommandMessage,
   Description,
-  Guard
+  Guard,
+  Infos
 } from "@typeit/discord";
+import { TextChannel } from "discord.js";
+import { Database } from "../database/Main";
 import { IsBotAdmin } from "../guards/IsBotAdmin";
+import { RequireRole } from "../guards/RequireRole";
 
 export abstract class Essential {
   @Command("eval")
@@ -48,5 +52,29 @@ export abstract class Essential {
   async PingCommand(command: CommandMessage) {
     let ping = command.client.ws.ping;
     command.reply(`Пинг: ${ping}мс`);
+  }
+
+  @Command("say")
+  @Description("Писанина от имени бота")
+  @Infos({ requireRole: "SAY" })
+  @Guard(RequireRole)
+  async SayCommand(command: CommandMessage) {
+    let tosay = command.commandContent.split(" ").slice(1).join(" ");
+    if(!tosay) {
+      command.reply("Хоть бы написал что-то.");
+      return;
+    }
+
+    let channelID = await Database.instance.Settings.get("sayChannel");
+    let channel;
+    try {
+      channel = await command.client.channels.fetch(channelID);
+    } catch {}
+
+    if(channel instanceof TextChannel) {
+      channel.send(tosay);
+    } else {
+      command.reply("Канал для записи не найден.");
+    }
   }
 }

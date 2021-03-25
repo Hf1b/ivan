@@ -1,15 +1,34 @@
 import * as mongoose from "mongoose";
+import RoleMapModel from "./models/RoleMap.model";
 import SettingModel from "./models/Setting.model";
+
+enum RoleFindBy {
+  Name = "name",
+  HumanName = "humanName",
+  ID = "id"
+}
 
 class Settings {
   async get(key: string) {
     let result = await SettingModel.find({ key });
-    if(result[0]) return result[0].value;
+    if(result && result[0]) return result[0].value;
   }
 
   async set(key: string, value: any) {
-    await SettingModel.updateOne({ key }, { value }, { upsert: true });
+    await SettingModel.updateOne({ key }, { key, value }, { upsert: true });
   }
+}
+
+class RoleMap {
+  async get(findBy: RoleFindBy, value: string) {
+    let query = {};
+    query[findBy] = value;
+
+    let result = await RoleMapModel.find(query);
+    if(result && result[0]) return result[0];
+  }
+
+  // Может быть потом будет реализован метод создания маппинга для роли
 }
 
 /* Thanks to zziger for good advices
@@ -26,6 +45,7 @@ class Database {
 
   db = mongoose.connection;
   Settings: Settings;
+  RoleMap: RoleMap;
 
   constructor(url?: string) {
     if(Database._instance) return Database._instance;
@@ -40,6 +60,7 @@ class Database {
     });
 
     this.Settings = new Settings();
+    this.RoleMap = new RoleMap();
 
     this.db.on("error", e => {
       console.log("Ошибка при подключении к БД.");
@@ -61,4 +82,4 @@ class Database {
   }
 }
 
-export { Database };
+export { Database, RoleFindBy };
