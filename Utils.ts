@@ -1,5 +1,7 @@
-let random_item = (arr) => {
+const random_item = (arr) => {
   return arr[Math.floor((Math.random() * arr.length))];
 }
 
-export { random_item };
+const noop = () => {};
+
+export { random_item, noop };
