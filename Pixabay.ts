@@ -15,6 +15,8 @@ class Pixabay {
       return Pixabay._instance
     }
     this.Key = key;
+
+    this._ready = true;
   }
 
   async getImages(query?: string) {
