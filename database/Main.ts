@@ -1,4 +1,5 @@
-import * as mongoose from "mongoose";
+import { connect, connection } from "mongoose";
+import { format } from "../Utils";
 import RoleMapModel from "./models/RoleMap.model";
 import SettingModel from "./models/Setting.model";
 
@@ -43,7 +44,7 @@ class Database {
   private static _instance: Database;
   private _ready = false;
 
-  db = mongoose.connection;
+  db = connection;
   Settings: Settings;
   RoleMap: RoleMap;
 
@@ -55,7 +56,7 @@ class Database {
       return Database._instance;
     }
 
-    mongoose.connect(url, {
+    connect(url, {
       useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
     });
 
@@ -63,12 +64,12 @@ class Database {
     this.RoleMap = new RoleMap();
 
     this.db.on("error", e => {
-      console.log("Ошибка при подключении к БД.");
+      console.log(format("db.connectOk"));
       console.error(e);
     })
 
     this.db.once("open", async () => {
-      console.log("Успешное подключение к БД.")
+      console.log(format("db.connectFail"));
       this._ready = true;
     });
   }

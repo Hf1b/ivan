@@ -6,20 +6,24 @@ import {
   Guard,
   Infos
 } from "@typeit/discord";
+
 import { TextChannel } from "discord.js";
+
 import { Database } from "../database/Main";
+
 import { IsBotAdmin } from "../guards/IsBotAdmin";
 import { RequireRole } from "../guards/RequireRole";
+import { format } from "../Utils";
 
 export abstract class Essential {
   @Command("eval")
-  @Description("Выполнение кода.")
+  @Description(format("eval.description"))
   @Guard(IsBotAdmin)
   async EvalCommand(command: CommandMessage) {
     let toexec = command.commandContent.split(" ").slice(1).join(" ");
     let result: string, error: string;
 
-    let start = Date.now();
+    let time = Date.now();
 
     try {
       result = eval(toexec);
@@ -27,41 +31,46 @@ export abstract class Essential {
       error = err;
     }
 
-    let output = (error ? ":-1:" : ":+1:") +
+    /*let output = (error ? ":-1:" : ":+1:") +
       " Выполнено за " + (Date.now() - start) +
-      "мс\n" + "```js\n" + (result ? result : error) + "\n```"; 
+      "мс\n" + "```js\n" + (result ? result : error) + "\n```";*/
 
-    command.reply(output);
+    time = Date.now() - time;
+    command.reply(format("eval.content",
+      (error ? ":-1:" : ":+1:"),
+      time,
+      (result ? result : error)
+    ));
   }
 
   @Command("help")
-  @Description("Помощь по командам бота")
+  @Description(format("help.description"))
   async HelpCommand(command: CommandMessage) {
-    let out = "Команды:";
+    let out = format("help.start");
 
     const commands = Client.getCommands()
     for(let cmd of commands) {
-      out += `\n${cmd.commandName}: ${cmd.description || "Нету описания"}`;
+      out += `\n${cmd.commandName}: ${cmd.description || format("help.noDescription")}`;
     }
 
     command.reply(out);
   }
 
   @Command("ping")
-  @Description("Показывает пинг бота")
+  @Description(format("ping.description"))
   async PingCommand(command: CommandMessage) {
     let ping = command.client.ws.ping;
-    command.reply(`Пинг: ${ping}мс`);
+    command.reply(format("ping.content", ping));
   }
 
   @Command("say")
-  @Description("Писанина от имени бота")
+  @Description(format("say.description"))
   @Infos({ requireRole: "SAY" })
   @Guard(RequireRole)
   async SayCommand(command: CommandMessage) {
     let tosay = command.commandContent.split(" ").slice(1).join(" ");
     if(!tosay) {
-      command.reply("Хоть бы написал что-то.");
+      command.reply(format("say.blank"));
       return;
     }
 
@@ -74,7 +83,7 @@ export abstract class Essential {
     if(channel instanceof TextChannel) {
       channel.send(tosay);
     } else {
-      command.reply("Канал для записи не найден.");
+      command.reply(format("say.channelNotFound"));
     }
   }
 }

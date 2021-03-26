@@ -1,0 +1,28 @@
+{
+  "ready": "Бот загрузился.\nТег: {0}\nID: {1}",
+  "commandNotFound": "Команда не найдена",
+  "deadDB": "Команда недоступна в связи с проблемами с БД.",
+
+  "db.connectOk": "Ошибка при подключении к БД.",
+  "db.connectFail": "Успешное подключение к БД.",
+
+  "IsBotAdmin.blocked": "Данная команда доступна только администраторам бота.",
+
+  "RequireRole.missing": "Разраб забыл запилить requireRole...",
+  "RequireRole.wrong": "Роль, необходимая для команды не найдена в маппингах или заполнена неверно.",
+  "RequireRole.blocked": "У вас нету роли {0}",
+
+  "eval.description": "Выполнение кода.",
+  "eval.content": "{0} Выполнено за {1}мс\n```js\n{2}\n```",
+
+  "help.description": "Помощь по командам бота",
+  "help.start": "Команды:",
+  "help.noDescription": "Нет описания",
+
+  "ping.description": "Показывает пинг бота",
+  "ping.content": "Пинг: {0}мс",
+
+  "say.description": "Писанина от имени бота",
+  "say.blank": "Хоть бы написал что-то.",
+  "say.channelNotFound": "Канал для записи не найден."
+}

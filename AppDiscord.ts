@@ -6,6 +6,7 @@ import {
   Command,
   Description
 } from "@typeit/discord";
+import { format } from "./Utils";
 
 @Discord("!", {
   import: [
@@ -18,7 +19,7 @@ import {
 export abstract class AppDiscord {
   @CommandNotFound()
   NotFound(command: CommandMessage) {
-    command.reply("Команда не найдена");
+    command.reply(format("commandNotFound"));
   }
 
   @Command("test")

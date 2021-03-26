@@ -1,9 +1,10 @@
 import { GuardFunction } from "@typeit/discord";
 import { Database } from "../database/Main";
+import { format } from "../Utils";
 
 let IsBotAdmin: GuardFunction<"commandMessage"> = async ([command], _, next) => {
   if(!Database.instance.ready) {
-    command.reply("Команда недоступна в связи с проблемами с БД.");
+    command.reply(format("deadDB"));
     return;
   }
 
@@ -13,7 +14,7 @@ let IsBotAdmin: GuardFunction<"commandMessage"> = async ([command], _, next) => 
     await next();
   }
   else {
-    command.reply("Данная команда доступна только администраторам бота.");
+    command.reply(format("IsBotAdmin.blocked"));
   }
 }
 
