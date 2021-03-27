@@ -2,6 +2,7 @@ import { Client } from "@typeit/discord";
 
 import { Database } from "./database/Main";
 import { Pixabay } from "./Pixabay";
+import { format } from "./Utils";
 
 export class Main {
   private static _client: Client;
@@ -12,19 +13,19 @@ export class Main {
 
   static start() {
     if(!process.env.BOT_TOKEN) {
-      console.error("Укажите токен в BOT_TOKEN перед запуском.");
+      console.error(format("start.no_BOT_TOKEN"));
       process.exit(1);
     }
 
     if(!process.env.BOT_DBURL) {
-      console.warn("Желательно - Для работы с БД необходимо указать URL на MongoDB в BOT_DBURL");
+      console.warn(format("start.no_BOT_DBURL"));
       new Database;
     } else {
       new Database(process.env.BOT_DBURL);
     }
 
     if(!process.env.BOT_PIXAKEY) {
-      console.warn("Желательно - Для работы с Pixabay необходимо указать его ключ в BOT_PIXAKEY");
+      console.warn(format("start.no_BOT_PIXAKEY"));
       new Pixabay;
     } else {
       new Pixabay(process.env.BOT_PIXAKEY);
@@ -38,7 +39,8 @@ export class Main {
       `${__dirname}/AppDiscord.js`
     );
 
-    console.log("Всего команд: " + Client.getCommands().length);
+    console.log(format("start.totalCommands",
+      Client.getCommands().length));
   }
 }
 

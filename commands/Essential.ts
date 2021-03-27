@@ -31,10 +31,6 @@ export abstract class Essential {
       error = err;
     }
 
-    /*let output = (error ? ":-1:" : ":+1:") +
-      " Выполнено за " + (Date.now() - start) +
-      "мс\n" + "```js\n" + (result ? result : error) + "\n```";*/
-
     time = Date.now() - time;
     command.reply(format("eval.content",
       (error ? ":-1:" : ":+1:"),

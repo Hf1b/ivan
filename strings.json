@@ -1,4 +1,9 @@
 {
+  "start.no_BOT_TOKEN": "Укажите токен в BOT_TOKEN перед запуском.",
+  "start.no_BOT_DBURL": "Желательно - Для работы с БД необходимо указать URL на MongoDB в BOT_DBURL.",
+  "start.no_BOT_PIXAKEY": "Желательно - Для работы с Pixabay необходимо указать его ключ в BOT_PIXAKEY.",
+  "start.totalCommands": "Всего команд: {0}.",
+
   "ready": "Бот загрузился.\nТег: {0}\nID: {1}",
   "commandNotFound": "Команда не найдена",
   "deadDB": "Команда недоступна в связи с проблемами с БД.",
