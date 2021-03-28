@@ -4,7 +4,9 @@
   "description": "discord bot",
   "main": "build/Main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node build/Main.js",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",
@@ -17,13 +19,12 @@
   },
   "homepage": "https://github.com/TheAltAccount/ueban-ts#readme",
   "dependencies": {
+    "@types/node": "^14.14.34",
+    "tslib": "^2.1.0",
     "@typeit/discord": "^4.0.9",
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
-    "mongoose": "^5.12.1"
-  },
-  "devDependencies": {
-    "@types/node": "^14.14.34",
-    "tslib": "^2.1.0"
+    "mongoose": "^5.12.1",
+    "typescript": "^4.2.3"
   }
 }
