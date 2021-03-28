@@ -60,8 +60,7 @@ export abstract class Essential {
   }
 
   @Command("say")
-  @Description(format("say.description"))
-  @Infos({ requireRole: "SAY" })
+  @Infos({ description: format("say.description"), requireRole: "SAY" })
   @Guard(RequireRole)
   async SayCommand(command: CommandMessage) {
     let tosay = command.commandContent.split(" ").slice(1).join(" ");
