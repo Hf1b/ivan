@@ -3,6 +3,8 @@ import { format } from "../Utils";
 import RoleMapModel from "./models/RoleMap.model";
 import SettingModel from "./models/Setting.model";
 
+const DEFAULT_PREFIX = "-";
+
 enum RoleFindBy {
   Name = "name",
   HumanName = "humanName",
@@ -17,6 +19,12 @@ class Settings {
 
   async set(key: string, value: any) {
     await SettingModel.updateOne({ key }, { key, value }, { upsert: true });
+  }
+
+  async getPrefix() {
+    if(!Database.instance.ready) return DEFAULT_PREFIX;
+    let result = await Database.instance.Settings.get("prefix");
+    return result || DEFAULT_PREFIX;
   }
 }
 

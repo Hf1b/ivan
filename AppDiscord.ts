@@ -7,8 +7,9 @@ import {
   Description
 } from "@typeit/discord";
 import { format } from "./Utils";
+import { Database } from "./database/Main";
 
-@Discord("!", {
+@Discord(Database.instance.Settings.getPrefix, {
   import: [
     Path.join(__dirname,  "commands", "*.ts"),
     Path.join(__dirname,  "commands", "*.js"),
