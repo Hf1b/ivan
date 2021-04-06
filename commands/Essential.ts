@@ -52,7 +52,7 @@ export abstract class Essential {
     command.reply(out);
   }
 
-  @Command("ping")
+  @Command("pong")
   @Description(format("ping.description"))
   async PingCommand(command: CommandMessage) {
     let ping = command.client.ws.ping;
